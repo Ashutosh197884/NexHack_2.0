@@ -11,6 +11,7 @@ SecureUPI is an AI security layer that sits **around** an existing UPI app and e
   <img alt="Status" src="https://img.shields.io/badge/status-working%20prototype-orange?style=flat">
   <img alt="Docs" src="https://img.shields.io/badge/docs-secureupi%2FREADME-blue?style=flat&logo=markdown">
   <img alt="Topic" src="https://img.shields.io/badge/Smart%20India%20Hackathon-NexHack%202.0-6f42c1?style=flat">
+  <img alt="License: MIT" src="https://img.shields.io/github/license/Ashutosh197884/NexHack_2.0?color=blue&style=flat">
 </p>
 
 ---
@@ -53,7 +54,7 @@ Then open two tabs:
 
 | # | Scenario | Expected outcome |
 |---|---|---|
-| 1 | ☕ **Coffee ₹250 (calm)** | Score ~8–12 · **LOW → APPROVE instantly** |
+| 1 | ☕ **Coffee ₹250 (calm)** | Score low (single digits) · **LOW → APPROVE instantly** |
 | 2 | 👧 **Senior ₹450 (slow but smooth)** | Score ~50–60 · **STEP-UP → approve** after a calm re-entry — slow but *steady* typing is compared with the senior customer's **own baseline**, not the global average |
 | 3 | 🌙 **2 AM ₹45,000 to a new payee** | **STEP-UP → approve** — big unusual payment gets friction, calm re-authentication clears it |
 | 4 | 💀 **"Verify account" ₹50,000 scam** | Score ~100 · **STEP-UP → BLOCK** — screen-share active + dictated, hesitant PIN entry; the hard gate refuses even the second attempt |
@@ -91,7 +92,7 @@ Then open two tabs:
 | Approve / Step-up / Block | `risk_engine.py` decision policy + the phone overlays |
 | Risk history, behavioural profiles, policy | `ops.py`, `bank.py` — risk-event log, per-customer baselines, tunable thresholds |
 
-**Full documentation** — API contract, complete demo walkthrough, deck→code map, honesty box, and the prototype→product roadmap — lives in **[`secureupi/README.md`](secureupi/README.md)**.
+**Full documentation** — API contract, complete demo walkthrough, deck→code map, and the honesty box — lives in **[`secureupi/README.md`](secureupi/README.md)**. The prototype→product plan is in **[`ROADMAP.md`](ROADMAP.md)**.
 
 ---
 

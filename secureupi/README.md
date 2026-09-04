@@ -98,9 +98,9 @@ console.
 
 | # | Scenario | Expected outcome |
 |---|---|---|
-| 1 | ☕ **Coffee ₹250 (calm)** | Score ~8–12 · **LOW → APPROVE instantly** — matches the "Risk Score 12 — Low" phone in the deck |
+| 1 | ☕ **Coffee ₹250 (calm)** | Score low (single digits — varies slightly with typing jitter) · **LOW → APPROVE instantly** — matches the "Low risk" phone in the deck |
 | 2 | 👧 **Senior ₹450 (slow but smooth)** | Score ~50–60 · **STEP-UP → approve** after a calm re-entry — slow but *steady* typing is compared with Ramesh's OWN baseline (auto-switches the persona) |
-| 3 | 🌙 **2 AM ₹45,000 to a new payee** | Score ~40–77 · **STEP-UP → approve** — big unusual payment gets friction, calm re-authentication clears it |
+| 3 | 🌙 **2 AM ₹45,000 to a new payee** | **STEP-UP → approve** — big unusual payment gets friction, calm re-authentication clears it |
 | 4 | 💀 **“Verify account” ₹50,000 scam** | Score ~100 · **STEP-UP → BLOCK** — screen-share active + dictated, hesitant PIN entry (a mid-entry PIN restart is captured as a real re-entry signal); hard gate refuses even the second attempt |
 | 5 | 👮 **Duress ₹40,000** | Score high · **BLOCK** after anxious re-entry — coercion signals (uneven tap-holds, big offsets) even with no screen-share |
 | 6 | 👋 **Try it yourself** | Type an amount, tap any 4-digit PIN (demo PIN: **7241**, any works) — calm rhythm → approve; hesitation/tremor → step-up |

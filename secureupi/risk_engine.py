@@ -124,6 +124,14 @@ HARD_GATE_SCREENSHARE_AMOUNT = DEFAULT_POLICY["hard_gate_amount"]
 # Context features that are NOT part of a user's behavioural profile
 CONTEXT_FEATURES = {"amount_log"}  # flags are also skipped in deviation below
 
+# On a step-up challenge the amount is NOT re-entered, so round-1 context AND
+# amount-entry behaviour are stale state, not fresh re-authentication signals.
+# Round 2 must score only the PIN re-entry (+ device flags) — exactly what the
+# demo actually re-measures — so these keys are frozen at the model's benign
+# mean (see evaluate()).
+CHALLENGE_FROZEN = ("amount_log", "new_payee", "amount_fill_s",
+                    "amount_corrections", "amount_max_pause_s", "pay_dwell_s")
+
 ACTIONS = {
     "approve": "APPROVE",
     "step_up": "STEP-UP",
@@ -307,11 +315,17 @@ class RiskEngine:
 
         # On a step-up challenge, round 2 judges the re-authentication BEHAVIOUR
         # only. The context (amount, payee) was accepted as "needs step-up", not
-        # denied — so freeze its features at baseline (risk-neutral contribution).
+        # denied — and the amount is not re-entered on the challenge screen, so
+        # any amount-entry features in the payload are stale round-1 state.
+        # Freeze them at the model's BENIGN mean (not the scaler mean, which is
+        # inflated by the balanced risk class): that is risk-neutral for a
+        # typical legitimate session, and round 2 scores the fresh PIN re-entry
+        # + device flags alone.
         if step == "challenge":
             vector = dict(vector)
-            for k in ("amount_log", "new_payee"):
-                vector[k] = float(self.model["scaler"]["mean"][k])
+            bmean = self.model["benign_profile"]["mean"]
+            for k in CHALLENGE_FROZEN:
+                vector[k] = float(bmean[k])
 
         eff = dict(self.policy)
         if policy:
