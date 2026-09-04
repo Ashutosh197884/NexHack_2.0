@@ -1,0 +1,43 @@
+SecureUPI — Behavioural Risk Model Training Report
+======================================================================
+Trained at : 2026-09-04 07:05:14 UTC
+Estimator  : logistic regression on standardised features
+Target     : high-risk payment context (screenshare scam / duress / anomaly)
+
+VALIDATION METRICS
+----------------------------------------------------------------------
+  accuracy             : 0.981
+  risk recall          : 1.000
+  benign specificity   : 0.967
+  mean P(risk)|risk    : 1.000
+  mean P(risk)|benign  : 0.164
+  confusion            : TP=430 FP=19 TN=551 FN=0
+  benign level share   : LOW 86.0%, MEDIUM 13.2%
+
+MODEL WEIGHTS (standardised scale; sign = risk direction)
+----------------------------------------------------------------------
+  amount_log             w=+0.969   Payment amount
+  new_payee              w=+0.595   First payment to payee
+  amount_fill_s          w=+0.750   Amount entry time
+  amount_corrections     w=+1.049   Amount corrections
+  amount_max_pause_s     w=+1.099   Longest typing pause
+  pay_dwell_s            w=+0.418   Review time before Pay
+  pin_cps                w=-0.988   PIN entry speed
+  pin_max_pause_s        w=+1.055   Longest PIN pause
+  pin_resets             w=+0.415   PIN re-entries
+  pin_hold_std_ms        w=+1.065   Tap-hold variability
+  pin_tap_offset_px      w=+1.024   Tap accuracy offset
+  screen_share           w=+0.448   Screen-share / remote view
+  integrity_fail         w=+0.120   Device integrity failure
+
+NOTE — what this model can and cannot claim
+----------------------------------------------------------------------
+• Inputs are DERIVED features (timings, counts, flags), never raw
+  touch streams — consistent with privacy-by-design.
+• Output is a contextual risk SIGNAL for pre-authorization
+  adaptive/step-up authentication, NOT fraud detection and NOT
+  a replacement for the UPI PIN or PSP decisioning.
+• Synthetic training data: real labelled behavioural data would
+  come from opt-in pilots with PSPs/banks under regulatory review.
+
+Calibrated intercept: 5.292  (typical benign session ≈ score 12)

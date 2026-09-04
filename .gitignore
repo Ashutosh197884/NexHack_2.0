@@ -1,0 +1,9 @@
+# Freebuff agent workspace metadata
+.freebuff/
+
+# runtime logs / artifacts
+*.log
+
+# Python
+__pycache__/
+*.pyc

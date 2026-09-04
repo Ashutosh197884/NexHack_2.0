@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SecureUPI — PSP Operations Console (SIH Demo)</title>
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="bank.css" />
+</head>
+<body class="bank-body">
+  <header class="topbar bank-topbar">
+    <div class="brand">
+      <span class="logo">&#128737;</span>
+      <div>
+        <div class="brand-name">Secure<span>UPI</span> <span class="console-tag">PSP OPERATIONS CONSOLE</span></div>
+        <div class="brand-sub">XYZ Bank &middot; UPI security operations &middot; SIH demo</div>
+      </div>
+    </div>
+    <div class="top-meta">
+      <span class="pill live"><span class="dot"></span> Live feed</span>
+      <span class="pill dim" id="operatorChip">Rita &middot; Risk Ops</span>
+      <button class="mini-btn" id="btnPolicy">&#9881; Risk policy</button>
+      <button class="mini-btn" id="btnSample">Load sample bank day (simulated)</button>
+      <a class="pill link" href="/">&larr; Payment demo</a>
+    </div>
+  </header>
+
+  <div id="banner" class="banner hidden"></div>
+
+  <main class="bank-layout">
+    <!-- KPIs -->
+    <section class="kpis" id="kpis"></section>
+
+    <section class="cust-strip" id="custStrip"></section>
+
+    <section class="bank-main">
+      <div class="bank-list">
+        <div class="console-head">
+          <span>TRANSACTION MONITOR <small id="feedMeta"></small></span>
+          <span class="head-right" id="newestTs"></span>
+        </div>
+        <table class="btable">
+          <thead>
+            <tr>
+              <th>time</th><th>customer</th><th>payee</th>
+              <th class="num">amount</th><th>risk</th><th>outcome</th><th>status</th>
+              <th>Settlement</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="txBody"></tbody>
+        </table>
+      </div>
+
+      <aside class="drawer" id="drawer">
+        <div class="drawer-empty" id="drawerEmpty">
+          <div class="ov-emoji">&#128202;</div>
+          <div>Select a transaction to see the SecureUPI risk assessment and bank actions.</div>
+          <div class="hint">Tip: run a scenario on the payment demo page — it lands here live.</div>
+        </div>
+        <div id="drawerContent" class="hidden"></div>
+      </aside>
+    </section>
+  </main>
+
+  <!-- risk-policy modal (threshold explorer) -->
+  <div id="policyModal" class="modal hidden">
+    <div class="modal-card">
+      <div class="dr-head">
+        <div>
+          <div class="dr-title">&#9881; Risk policy — tune the decision bars</div>
+          <div class="dr-meta">Policy, not science: choose where LOW ends, where HIGH starts, and how strict step-up round 2 is.</div>
+        </div>
+        <button class="mini-btn" id="btnClosePolicy">&#10005;</button>
+      </div>
+
+      <div class="pol-sliders">
+        <label class="psl">
+          <span><b>LOW&nbsp;≤</b> score <b>&lt;</b> <span class="pv" id="lowVal">30</span> &rarr; instant approve</span>
+          <input type="range" id="lowRange" min="0" max="99" step="1" value="30" />
+        </label>
+        <label class="psl">
+          <span>MEDIUM&nbsp;&lt; <span class="pv" id="medVal">65</span> &rarr; step-up at risk</span>
+          <input type="range" id="medRange" min="1" max="100" step="1" value="65" />
+        </label>
+        <label class="psl">
+          <span>Step-up round: score &ge; <span class="pv" id="chalVal">45</span> &rarr; block</span>
+          <input type="range" id="chalRange" min="0" max="100" step="1" value="45" />
+        </label>
+      </div>
+
+      <div class="pol-body">
+        <div class="pol-metrics" id="polMetrics"><div class="tx-empty">drag a slider…</div></div>
+        <div class="pol-curve">
+          <div class="rl" style="margin-bottom:6px">Validation replay — catch rate vs benign friction (sweeping the LOW bar)</div>
+          <svg id="curveSvg" width="100%" height="150" viewBox="0 0 340 150" preserveAspectRatio="none"></svg>
+          <div class="curve-axis"><span>0% friction (approve everything)</span><span>100% friction</span></div>
+        </div>
+      </div>
+
+      <div class="pol-actions">
+        <button class="mini-btn" id="btnResetPolicy">Reset to defaults</button>
+        <button class="ov-btn" id="btnSavePolicy" style="margin-top:0;padding:9px 22px;min-width:0">Apply policy</button>
+      </div>
+      <div class="dr-meta" id="policyHint" style="margin-top:8px"></div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    SecureUPI &middot; Team SlothCode &middot; Smart India Hackathon — the PSP/bank owns the final
+    enforcement decision; SecureUPI supplies the pre-authorization risk signals.
+    <span class="foot-dim">Rows marked SIMULATED are demo data for a realistic console; LIVE rows are real assessments from the payment demo.</span>
+  </footer>
+
+<script src="bank.js"></script>
+</body>
+</html>
