@@ -96,6 +96,21 @@ Then open two tabs:
 
 ---
 
+## ☁️ Deploy (Render, free)
+
+This is a stateful demo server (risk events, bank transactions, profiles live on
+its filesystem), so it deploys as a **persistent web service**, not a serverless
+function. The repo ships a [Render Blueprint](render.yaml): on
+dashboard.render.com choose **New + → Blueprint**, pick this repo, and Render
+automatically creates the service (`python server.py`, `HOST=0.0.0.0`, health
+check on `/api/v1/health`).
+
+> Free-tier note: the JSONL store lives on the instance's ephemeral disk — it
+> survives requests while the service is up but resets on redeploys/restarts,
+> so re-run **"Load sample bank day"** in the console after a redeploy.
+
+---
+
 ## Technical snapshot
 
 - **Backend:** pure Python standard library (`http.server` + JSON) — no packages, works offline.

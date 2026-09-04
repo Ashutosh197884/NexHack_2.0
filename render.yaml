@@ -1,0 +1,20 @@
+# Render Blueprint — SecureUPI SIH demo
+# Deploy: render.com → New+ → Blueprint → pick this repo (render.yaml is found automatically).
+# Runtime state (data/*.jsonl) lives on the instance's ephemeral disk: it survives
+# requests while the service is up, but resets on each redeploy/restart (free tier
+# has no persistent disk) — press "Load sample bank day" in the console to re-seed.
+services:
+  - type: web
+    name: secureupi
+    runtime: python
+    repo: https://github.com/Ashutosh197884/NexHack_2.0
+    plan: free
+    region: oregon
+    autoDeploy: true
+    healthCheckPath: /api/v1/health
+    startCommand: cd secureupi && python server.py
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: PYTHONUNBUFFERED
+        value: "1"

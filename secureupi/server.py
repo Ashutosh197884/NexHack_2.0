@@ -9,12 +9,16 @@ Serves:
   • health           (GET  /api/v1/health)
 
 Run from the secureupi/ directory:
-    python server.py [port]        (default 8077)
+    python server.py [port]        (default 8077, or $PORT when set)
+
+On a platform deploy the host defaults to 127.0.0.1 locally but can be
+overridden with $HOST (Render/Fly need 0.0.0.0).
 """
 
 from __future__ import annotations
 
 import json
+import os
 import sys
 import threading
 import time
@@ -285,11 +289,12 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def main() -> None:
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else 8077
+    port = int(sys.argv[1]) if len(sys.argv) > 1 else int(os.environ.get("PORT", "8077"))
+    host = os.environ.get("HOST", "127.0.0.1")
     bank.load()
     ops.ensure_profiles()
-    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
-    print(f"SecureUPI demo server on http://127.0.0.1:{port}")
+    server = ThreadingHTTPServer((host, port), Handler)
+    print(f"SecureUPI demo server on http://{host}:{port}")
     print(f"  model v{MODEL['version']} trained {MODEL['trained_at_utc']}")
     try:
         server.serve_forever()
