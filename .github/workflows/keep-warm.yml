@@ -1,0 +1,23 @@
+# Keep the free-tier Render demo awake before hackathon judging.
+# Render spins free web services down after ~15 min without traffic; a request
+# every 10 minutes prevents that. Public repo -> free Actions minutes.
+name: keep-warm
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"   # every 10 minutes, UTC
+  workflow_dispatch: {}       # allow a manual ping from the Actions tab
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    # The demo is a public page; pinging it from a public runner is harmless.
+    # Failing is not fatal — the first request after an idle period can take
+    # ~1 min to wake the instance, so retry before giving up.
+    steps:
+      - name: Ping SecureUPI demo health endpoint
+        continue-on-error: true
+        run: |
+          curl -sS -o /dev/null -w "secureupi.onrender.com -> HTTP %{http_code}\n" \
+            --max-time 100 --retry 4 --retry-delay 15 --retry-all-errors \
+            https://secureupi.onrender.com/api/v1/health

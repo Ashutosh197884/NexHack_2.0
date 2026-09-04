@@ -4,6 +4,9 @@
 
 SecureUPI is an AI security layer that sits **around** an existing UPI app and evaluates whether a payment looks risky **before** it is authorized — then lets the bank/PSP **approve, step-up, or block**. This repo contains the full working prototype plus the pitch deck.
 
+> **▶ Try the live demo:** <https://secureupi.onrender.com> — payment demo · <https://secureupi.onrender.com/bank> PSP operations console
+> *(free-tier Render instance — may take ~1 min to wake after 15 min idle)*
+
 <p align="left">
   <img alt="Python 3" src="https://img.shields.io/badge/Python-3.8%2B-3776AB?logo=python&logoColor=white&style=flat">
   <img alt="Zero dependencies" src="https://img.shields.io/badge/dependencies-zero-2ea44f?style=flat">
