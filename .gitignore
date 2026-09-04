@@ -1,6 +1,9 @@
 # Freebuff agent workspace metadata
 .freebuff/
 
+# auth scratch file (may contain one-time login codes)
+gh_auth.log
+
 # runtime logs / artifacts
 *.log
 
