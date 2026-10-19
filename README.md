@@ -33,6 +33,27 @@ It is an **SDK + backend risk engine for banks/PSPs** — *not* another UPI app.
 
 ---
 
+## 🧱 The implementation stack (FastAPI + React, Sprint 1)
+
+Alongside the zero-dependency demo, the repo carries the **structured MVP application** under development:
+
+- [`backend/`](backend/README.md) — FastAPI + SQLAlchemy + JWT. Implements the plan's §6 QR intelligence (`upi://pay` parser + synthetic QR bank via segno), §7 schema (users/recipients/transactions/risk_assessments/risk_factors/audit_events on SQLite, PostgreSQL-ready via env), §8 contract (`/qr/analyze`, `/risk/assess`, `/transactions`, `/dashboard/summary`), and §12's test matrix (**41 passing pytest cases**).
+- [`frontend/`](frontend) — React + TypeScript + Tailwind (Vite).qr intake by upload-and-decode with jsQR or synthetic samples → payment review → explainable risk result → simulate/cancel → history + dashboard.
+- The scoring core is the **proven prototype engine** — the trained behavioural model is loaded via `backend/app/ml/inference.py` behind a stable interface (ML stays optional; the rule-based axis works if the artifact is missing).
+
+```bash
+# backend
+cd backend && pip install -r requirements.txt && uvicorn app.main:app --port 8010
+# frontend (separate shell)
+cd frontend && npm install && npm run dev      # → http://localhost:5173
+# tests
+python -m pytest backend/tests -q
+```
+
+Demo accounts (seeded on first boot): `demo@secureupi.app` · `senior@secureupi.app`, password `secureupi-demo`.
+
+---
+
 ## 🎬 Demo script for evaluators
 
 The prototype is a two-screen demo: the **customer's phone UPI app** and the **PSP Operations Console** (the bank side). Everything below is live — no recordings, no hard-coded scores.

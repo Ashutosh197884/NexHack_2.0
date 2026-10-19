@@ -6,7 +6,20 @@ gh_auth.log
 
 # runtime logs / artifacts
 *.log
+*.log.err
+vite.log*
 
 # Python
 __pycache__/
 *.pyc
+.venv/
+secureupi.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Node / frontend
+node_modules/
+dist/
+.tsc-cache/
+tsconfig.tsbuildinfo
