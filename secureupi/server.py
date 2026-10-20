@@ -294,7 +294,7 @@ def main() -> None:
     bank.load()
     ops.ensure_profiles()
     server = ThreadingHTTPServer((host, port), Handler)
-    print(f"SecureUPI demo server on http://{host}:{port}")
+    print(f"SecureUPI demo server on http://{host}:{port} (public: https://secureupi.onrender.com · /bank)")
     print(f"  model v{MODEL['version']} trained {MODEL['trained_at_utc']}")
     try:
         server.serve_forever()

@@ -18,3 +18,7 @@ services:
         value: 0.0.0.0
       - key: PYTHONUNBUFFERED
         value: "1"
+      - key: PUBLIC_URL
+        value: https://secureupi.onrender.com
+      - key: PUBLIC_BANK_URL
+        value: https://secureupi.onrender.com/bank
